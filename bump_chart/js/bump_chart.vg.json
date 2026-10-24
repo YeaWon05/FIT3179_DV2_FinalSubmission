@@ -72,7 +72,14 @@
       "field": "Species",
       "type": "nominal",
       "scale": {
-        "scheme": "tableau10"
+        "range": [
+          "#E67E22",
+          "#3A8F5C",
+          "#D96C9D",
+          "#3B82C4",
+          "#7A5AA6",
+          "#168F9B"
+        ]
       },
       "legend": null
     },
@@ -141,7 +148,14 @@
           "field": "Species",
           "type": "nominal",
           "scale": {
-            "scheme": "tableau10"
+            "range": [
+              "#E67E22",
+              "#3A8F5C",
+              "#D96C9D",
+              "#3B82C4",
+              "#7A5AA6",
+              "#168F9B"
+            ]
           },
           "legend": null
         }
@@ -169,7 +183,14 @@
           "field": "Species",
           "type": "nominal",
           "scale": {
-            "scheme": "tableau10"
+            "range": [
+              "#E67E22",
+              "#3A8F5C",
+              "#D96C9D",
+              "#3B82C4",
+              "#7A5AA6",
+              "#168F9B"
+            ]
           },
           "legend": null
         }

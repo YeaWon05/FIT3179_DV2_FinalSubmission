@@ -33,6 +33,11 @@ h3,
     font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
 }
 
+
+.key  { font-weight: 700; color: #0b5fa5; }  
+.high { font-weight: 700; color: #1a7f4b; }  
+.low  { font-weight: 700; color: #c0392b; }  
+
 a {
     color: inherit;
 }

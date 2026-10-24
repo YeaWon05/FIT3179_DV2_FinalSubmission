@@ -4,8 +4,6 @@
   "width": 600,
   "height": 650,
 
-  "title": "Total Recreational Fishing Catch by Fishing Region in Queensland",
-
   "projection": {
     "type": "mercator",
     "scale": 1200,

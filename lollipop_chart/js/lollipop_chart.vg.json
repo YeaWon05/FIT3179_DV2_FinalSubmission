@@ -82,6 +82,15 @@
         },
         "x2": {
           "field": "Average"
+        },
+        "color": {
+          "field": "Highlight",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Highest", "Lowest", "Other"],
+            "range": ["#59a14f", "#FFA500", "#1f77b4"]
+          },
+          "legend": null
         }
       }
     },
