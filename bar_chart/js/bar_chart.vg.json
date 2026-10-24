@@ -10,7 +10,17 @@
 
   "transform": [
     {"calculate": "trim(datum['Motivation'])", "as": "Reason"},
-    {"calculate": "toNumber(trim(datum[' Total (%)'] || datum['Total (%)']))", "as": "Percent"}
+    {"calculate": "toNumber(trim(datum[' Total (%)'] || datum['Total (%)']))", "as": "Percent"},
+    {
+      "joinaggregate": [
+        {"op": "max", "field": "Percent", "as": "Highest"},
+        {"op": "min", "field": "Percent", "as": "Lowest"}
+      ]
+    },
+    {
+      "calculate": "datum.Percent === datum.Highest ? 'Highest' : datum.Percent === datum.Lowest ? 'Lowest' : 'Other'",
+      "as": "Highlight"
+    }
   ],
 
   "encoding": {
@@ -19,20 +29,41 @@
       "type": "nominal",
       "title": null,
       "sort": "-x",
-      "axis": {"labelFontSize": 13, "ticks": false, "domain": false}
+      "axis": {
+        "labelFontSize": 13,
+        "ticks": false,
+        "domain": false
+      }
     },
     "x": {
       "field": "Percent",
       "type": "quantitative",
       "title": "Share of respondents (%)",
       "scale": {"domain": [0, 40]},
-      "axis": {"grid": true, "gridColor": "#eeeeee", "tickMinStep": 5}
+      "axis": {
+        "grid": true,
+        "gridColor": "#eeeeee",
+        "tickMinStep": 5
+      }
+    },
+    "color": {
+      "field": "Highlight",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Highest", "Lowest", "Other"],
+        "range": ["#59a14f", "#FFA500", "#1f77b4"]
+      },
+      "legend": null
     }
   },
 
   "layer": [
     {
-      "mark": {"type": "bar", "color": "#1f77b4", "cornerRadiusEnd": 3, "height": {"band": 0.7}},
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 3,
+        "height": {"band": 0.7}
+      },
       "encoding": {
         "tooltip": [
           {"field": "Reason", "type": "nominal", "title": "Motivation"},
@@ -41,9 +72,19 @@
       }
     },
     {
-      "mark": {"type": "text", "align": "left", "dx": 5, "fontSize": 12, "fontWeight": "bold", "color": "#1f4e79"},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
       "encoding": {
-        "text": {"field": "Percent", "type": "quantitative", "format": ".0f"}
+        "text": {
+          "field": "Percent",
+          "type": "quantitative",
+          "format": ".0f"
+        }
       }
     }
   ],

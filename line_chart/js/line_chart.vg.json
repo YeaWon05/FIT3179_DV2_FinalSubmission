@@ -88,7 +88,7 @@
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 130
+        "size": 200
       },
       "encoding": {
         "color": {

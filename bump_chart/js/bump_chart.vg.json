@@ -121,7 +121,7 @@
     {
       "mark": {
         "type": "circle",
-        "size": 90,
+        "size": 250,
         "stroke": "white",
         "strokeWidth": 1
       }
