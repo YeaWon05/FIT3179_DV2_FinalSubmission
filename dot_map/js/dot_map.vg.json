@@ -1,0 +1,121 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "data": {
+    "url": "dot_map/data/fishing_location_top_6.csv",
+    "format": {"type": "csv"}
+  },
+
+  "facet": {
+    "field": "Fish",
+    "type": "nominal",
+    "sort": [
+      "Whiting",
+      "Snapper",
+      "Australian Salmon",
+      "Bream",
+      "Mullet",
+      "Flathead"
+    ],
+    "header": {
+      "title": null,
+      "labelFontSize": 14,
+      "labelFontWeight": "bold",
+      "labelOrient": "top",
+      "labelPadding": 8
+    }
+  },
+
+  "columns": 2,
+
+  "spec": {
+    "width": 400,
+    "height": 300,
+
+    "projection": {
+      "type": "mercator",
+      "scale": 1300,
+      "center": [145.5, -36.7],
+      "translate": [200, 150]
+    },
+
+    "layer": [
+      {
+        "data": {
+          "values": [{}]
+        },
+        "mark": {
+          "type": "rect",
+          "fill": null,
+          "stroke": "#999999",
+          "strokeWidth": 1
+        },
+        "encoding": {
+          "x": {"value": 0},
+          "x2": {"value": 399},
+          "y": {"value": 0},
+          "y2": {"value": 299}
+        }
+      },
+
+      {
+        "data": {
+          "url": "dot_map/js/victoria.topojson",
+          "format": {"type": "json"}
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "white",
+          "stroke": "black",
+          "strokeWidth": 0.5
+        }
+      },
+
+      {
+        "mark": {
+          "type": "circle",
+          "color": "red",
+          "stroke": "black",
+          "strokeWidth": 0.5,
+          "size": 45,
+          "opacity": 0.8
+        },
+        "encoding": {
+          "longitude": {
+            "field": "Longitude",
+            "type": "quantitative"
+          },
+          "latitude": {
+            "field": "Latitude",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {
+              "field": "Location",
+              "type": "nominal",
+              "title": "Fishing Location"
+            },
+            {
+              "field": "Fish",
+              "type": "nominal",
+              "title": "Fish Species"
+            }
+          ]
+        }
+      }
+    ],
+
+    "view": {
+      "stroke": null
+    }
+  },
+
+  "config": {
+    "facet": {
+      "spacing": 16
+    },
+    "view": {
+      "stroke": null
+    }
+  }
+}

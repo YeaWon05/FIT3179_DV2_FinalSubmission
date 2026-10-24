@@ -1,0 +1,106 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 400,
+  "data": {
+    "url": "line_chart/data/fishing_days.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(replace(datum['Fisher Days'], /[ ,]/g, ''))",
+      "as": "Fisher Days Clean"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Fisher Days Clean",
+          "as": "Highest"
+        },
+        {
+          "op": "min",
+          "field": "Fisher Days Clean",
+          "as": "Lowest"
+        }
+      ]
+    },
+    {
+      "calculate": "datum['Fisher Days Clean'] === datum.Highest ? 'Highest' : datum['Fisher Days Clean'] === datum.Lowest ? 'Lowest' : 'Other'",
+      "as": "Point Type"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Survey Year",
+      "type": "ordinal",
+      "title": "Year",
+      "sort": [
+        "2013-14",
+        "2017-18",
+        "2019-20",
+        "2021-22",
+        "2023-24"
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "Fisher Days Clean",
+      "type": "quantitative",
+      "title": "Fisher Days",
+      "scale": {
+        "zero": false
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Survey Year",
+        "type": "ordinal",
+        "title": "Year"
+      },
+      {
+        "field": "Fisher Days Clean",
+        "type": "quantitative",
+        "title": "Fisher Days",
+        "format": ",.0f"
+      },
+      {
+        "field": "Point Type",
+        "type": "nominal",
+        "title": "Value"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "color": "#2f6f62"
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 130
+      },
+      "encoding": {
+        "color": {
+          "field": "Point Type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Highest", "Lowest", "Other"],
+            "range": ["#f0b429", "#d9534f", "#2f6f62"]
+          },
+          "legend": null
+        }
+      }
+    }
+  ]
+}

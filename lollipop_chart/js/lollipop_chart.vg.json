@@ -1,0 +1,148 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 700,
+  "height": 500,
+
+  "data": {
+    "url": "lollipop_chart/data/fishing_expenditure.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "trim(datum['Expenditure category'])",
+      "as": "Category"
+    },
+    {
+      "calculate": "toNumber(trim(datum['Average per fisher']))",
+      "as": "Average"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Average",
+          "as": "MaxAverage"
+        },
+        {
+          "op": "min",
+          "field": "Average",
+          "as": "MinAverage"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.Average === datum.MaxAverage ? 'Highest' : datum.Average === datum.MinAverage ? 'Lowest' : 'Other'",
+      "as": "Highlight"
+    }
+  ],
+
+  "encoding": {
+    "y": {
+      "field": "Category",
+      "type": "ordinal",
+      "title": "Expenditure Category",
+      "sort": {
+        "field": "Average",
+        "order": "descending"
+      },
+      "axis": {
+        "labelLimit": 180
+      }
+    },
+    "x": {
+      "field": "Average",
+      "type": "quantitative",
+      "title": "Average Expenditure per Fisher (AUD)",
+      "scale": {
+        "domain": [0, 1200]
+      },
+      "axis": {
+        "format": ",.0f",
+        "grid": true,
+        "gridColor": "#eeeeee",
+        "labelOverlap": false
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#1f77b4"
+      },
+      "encoding": {
+        "x": {
+          "datum": 0
+        },
+        "x2": {
+          "field": "Average"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 250,
+        "stroke": "white",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "Highlight",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Highest", "Lowest", "Other"],
+            "range": ["#59a14f", "#FFA500", "#1f77b4"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "Category",
+            "type": "nominal",
+            "title": "Expenditure Category"
+          },
+          {
+            "field": "Average",
+            "type": "quantitative",
+            "title": "Average per Fisher (AUD)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dx": 10,
+        "align": "left",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#1f4e79"
+      },
+      "encoding": {
+        "text": {
+          "field": "Average",
+          "type": "quantitative",
+          "format": ",.0f"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "grid": false
+    }
+  }
+}

@@ -1,0 +1,286 @@
+:root {
+    --deep: #0c3b44;
+    --kelp: #2f6f62;
+    --mist: #eaf1ee;
+    --foam: #ffffff;
+    --buoy: #f0b429;
+    --ink: #16282c;
+    --muted: #58706f;
+    --line: #c9d8d3;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px;
+}
+
+body {
+    margin: 0;
+    background: var(--mist);
+    color: var(--ink);
+    font: 18px/1.65 "Source Serif 4", Georgia, serif;
+}
+
+h1,
+h2,
+h3,
+.nav {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--buoy);
+    outline-offset: 3px;
+}
+
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    padding: 12px clamp(16px, 5vw, 64px);
+
+    background: var(--deep);
+    color: var(--foam);
+    font-size: 15px;
+}
+
+.nav strong {
+    margin-right: auto;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.nav a {
+    padding: 6px 12px;
+    border-radius: 999px;
+
+    color: #cfe3de;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--foam);
+}
+
+
+.hero {
+    position: relative;
+    overflow: hidden;
+
+    padding:
+        clamp(48px, 9vw, 120px)
+        clamp(16px, 5vw, 64px)
+        clamp(56px, 8vw, 96px);
+
+    background: #168f9b;
+    color: var(--foam);
+}
+
+.hero h1 {
+    max-width: 14ch;
+    margin: 0;
+
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: clamp(44px, 8.5vw, 120px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+}
+
+.hero p {
+    max-width: 56ch;
+    margin: 28px 0 0;
+
+    color: #f0fcfc;
+    font-size: clamp(18px, 2vw, 22px);
+}
+
+.hero .wave {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+
+    width: 100%;
+    height: 48px;
+}
+
+#participation {
+    --accent: #0c3b44;
+}
+
+#catch {
+    --accent: #2f8f6b;
+}
+
+#activity {
+    --accent: #d99a0b;
+}
+
+#motivation {
+    --accent: #3b5b9a;
+}
+
+main {
+    padding: 0 clamp(16px, 5vw, 64px);
+}
+
+.section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 0 24px;
+}
+
+.section > h2 {
+    margin: 0;
+    padding-left: 18px;
+
+    border-left: 10px solid var(--accent);
+
+    color: var(--deep);
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.section > .lead {
+    max-width: 62ch;
+    margin: 14px 0 36px 28px;
+
+    color: var(--muted);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 28px;
+}
+
+.span-12 {
+    grid-column: span 12;
+}
+
+
+figure {
+    min-width: 0;
+    margin: 0;
+    padding: 22px 22px 18px;
+
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--accent);
+    border-radius: 10px;
+
+    background: var(--foam);
+}
+
+figure h3 {
+    margin: 0 0 14px;
+
+    color: var(--deep);
+    font-size: 20px;
+}
+
+.vis-container {
+    width: 100%;
+    min-height: 260px;
+    overflow-x: auto;
+    text-align: center;
+}
+
+.vis-container .vega-embed {
+    display: inline-block;
+    text-align: left;
+}
+
+figure figcaption {
+    max-width: 75ch;
+    margin: 16px 0 0;
+    padding-top: 14px;
+
+    border-top: 1px solid var(--line);
+
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+figure figcaption.pending {
+    font-style: italic;
+}
+
+.load-error {
+    color: #9b2c2c;
+    font-size: 15px;
+}
+
+footer {
+    margin-top: 80px;
+    padding: 36px clamp(16px, 5vw, 64px);
+
+    background: var(--deep);
+    color: #cfe3de;
+    font-size: 15px;
+}
+
+footer div {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.map-insight {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 18px 24px;
+    background: #ffffff;
+    border: 1px solid #dbe4ee;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #334155;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.map-insight p {
+    margin: 10px 0;
+}
+
+.map-insight .insight-intro {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e3a5f;
+}
+
+.map-insight strong {
+    color: #2171b5;
+}
+
+@media (max-width: 900px) {
+    .nav strong {
+        flex-basis: 100%;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

@@ -1,0 +1,141 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 520,
+
+  "layer": [
+    {
+      "data": {"sequence": {"start": 10, "stop": 60, "step": 10, "as": "level"}},
+      "transform": [
+        {"calculate": "[0,1,2,3,4,5]", "as": "idxs"},
+        {"flatten": ["idxs"]},
+        {"calculate": "datum.level / 50 * sin(datum.idxs * 2 * PI / 5)", "as": "x"},
+        {"calculate": "datum.level / 50 * cos(datum.idxs * 2 * PI / 5)", "as": "y"}
+      ],
+      "mark": {"type": "line", "stroke": "#cfcfcf", "strokeWidth": 1},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "detail": {"field": "level", "type": "nominal"},
+        "order": {"field": "idxs", "type": "quantitative"}
+      }
+    },
+    {
+      "data": {"url": "radar_chart/data/fishing_effort.csv", "format": {"type": "csv"}},
+      "transform": [
+        {"calculate": "datum['Waterbody']", "as": "waterbody"},
+        {"calculate": "toNumber(datum['Fishing Effort (%)'])", "as": "share"},
+        {"window": [{"op": "row_number", "as": "rn"}]},
+        {"calculate": "datum.rn - 1", "as": "idx"},
+        {"calculate": "0", "as": "x0"},
+        {"calculate": "0", "as": "y0"},
+        {"calculate": "sin(datum.idx * 2 * PI / 5)", "as": "x1"},
+        {"calculate": "cos(datum.idx * 2 * PI / 5)", "as": "y1"}
+      ],
+      "mark": {"type": "rule", "stroke": "#b0b0b0", "strokeWidth": 1},
+      "encoding": {
+        "x": {"field": "x0", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y0", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "x2": {"field": "x1"},
+        "y2": {"field": "y1"}
+      }
+    },
+    {
+      "data": {"sequence": {"start": 10, "stop": 60, "step": 10, "as": "level"}},
+      "transform": [
+        {"calculate": "0", "as": "x"},
+        {"calculate": "datum.level / 50", "as": "y"},
+        {"calculate": "datum.level + '%'", "as": "label"}
+      ],
+      "mark": {"type": "text", "align": "left", "dx": 4, "dy": -4, "fontSize": 10, "color": "#777"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "text": {"field": "label", "type": "nominal"}
+      }
+    },
+    {
+      "data": {"url": "radar_chart/data/fishing_effort.csv", "format": {"type": "csv"}},
+      "transform": [
+        {"calculate": "datum['Waterbody']", "as": "waterbody"},
+        {"calculate": "toNumber(datum['Fishing Effort (%)'])", "as": "share"},
+        {"window": [{"op": "row_number", "as": "rn"}]},
+        {"calculate": "datum.rn - 1", "as": "idx"},
+        {"calculate": "datum.share / 50 * sin(datum.idx * 2 * PI / 5)", "as": "x"},
+        {"calculate": "datum.share / 50 * cos(datum.idx * 2 * PI / 5)", "as": "y"}
+      ],
+      "mark": {
+        "type": "line",
+        "interpolate": "linear-closed",
+        "stroke": "#1f77b4",
+        "strokeWidth": 2.5,
+        "fill": "#1f77b4",
+        "fillOpacity": 0.3
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "order": {"field": "idx", "type": "quantitative"}
+      }
+    },
+    {
+      "data": {"url": "radar_chart/data/fishing_effort.csv", "format": {"type": "csv"}},
+      "transform": [
+        {"calculate": "datum['Waterbody']", "as": "waterbody"},
+        {"calculate": "toNumber(datum['Fishing Effort (%)'])", "as": "share"},
+        {"window": [{"op": "row_number", "as": "rn"}]},
+        {"calculate": "datum.rn - 1", "as": "idx"},
+        {"calculate": "datum.share / 50 * sin(datum.idx * 2 * PI / 5)", "as": "x"},
+        {"calculate": "datum.share / 50 * cos(datum.idx * 2 * PI / 5)", "as": "y"}
+      ],
+      "mark": {"type": "point", "filled": true, "size": 90, "color": "#1f77b4", "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "tooltip": [
+          {"field": "waterbody", "type": "nominal", "title": "Waterbody"},
+          {"field": "share", "type": "quantitative", "title": "Share of fisher days (%)"}
+        ]
+      }
+    },
+    {
+      "data": {"url": "radar_chart/data/fishing_effort.csv", "format": {"type": "csv"}},
+      "transform": [
+        {"calculate": "datum['Waterbody']", "as": "waterbody"},
+        {"calculate": "toNumber(datum['Fishing Effort (%)'])", "as": "share"},
+        {"window": [{"op": "row_number", "as": "rn"}]},
+        {"calculate": "datum.rn - 1", "as": "idx"},
+        {"calculate": "datum.share / 50 * sin(datum.idx * 2 * PI / 5)", "as": "x"},
+        {"calculate": "datum.share / 50 * cos(datum.idx * 2 * PI / 5)", "as": "y"},
+        {"calculate": "datum.share + '%'", "as": "label"}
+      ],
+      "mark": {"type": "text", "dy": -12, "fontSize": 12, "fontWeight": "bold", "color": "#1f4e79"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "text": {"field": "label", "type": "nominal"}
+      }
+    },
+    {
+      "data": {"url": "radar_chart/data/fishing_effort.csv", "format": {"type": "csv"}},
+      "transform": [
+        {"calculate": "datum['Waterbody']", "as": "waterbody"},
+        {"calculate": "toNumber(datum['Fishing Effort (%)'])", "as": "share"},
+        {"window": [{"op": "row_number", "as": "rn"}]},
+        {"calculate": "datum.rn - 1", "as": "idx"},
+        {"calculate": "1.18 * sin(datum.idx * 2 * PI / 5)", "as": "x"},
+        {"calculate": "1.18 * cos(datum.idx * 2 * PI / 5)", "as": "y"}
+      ],
+      "mark": {"type": "text", "fontSize": 13, "fontWeight": "bold", "color": "#333"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "text": {"field": "waterbody", "type": "nominal"}
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"grid": false}
+  }
+}

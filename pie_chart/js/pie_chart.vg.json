@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 500,
+
+
+  "data": {
+    "url": "pie_chart/data/fishing_method.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {"calculate": "trim(datum['Fishing Method'])", "as": "Method"},
+    {"calculate": "toNumber(trim(datum[' Effort (%)'] || datum['Effort (%)']))", "as": "Percent"},
+    {"calculate": "datum.Percent + '%'", "as": "Label"}
+  ],
+
+  "encoding": {
+    "theta": {"field": "Percent", "type": "quantitative", "stack": true},
+    "order": {"field": "Percent", "type": "quantitative", "sort": "descending"},
+    "color": {
+      "field": "Method",
+      "type": "nominal",
+      "title": "Fishing method",
+      "sort": {"field": "Percent", "order": "descending"},
+      "scale": {"range": ["#1f4e79", "#1f77b4", "#6baed6", "#c6dbef"]},
+      "legend": {"orient": "right", "labelFontSize": 13, "titleFontSize": 13}
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {"type": "arc", "outerRadius": 150, "stroke": "white", "strokeWidth": 2},
+      "encoding": {
+        "tooltip": [
+          {"field": "Method", "type": "nominal", "title": "Fishing method"},
+          {"field": "Percent", "type": "quantitative", "title": "Effort (%)"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "radius": 172, "fontSize": 13, "fontWeight": "bold", "color": "#333"},
+      "encoding": {
+        "text": {"field": "Label", "type": "nominal"},
+        "color": {"value": "#333333"}
+      }
+    }
+  ],
+
+  "view": {"stroke": null}
+}

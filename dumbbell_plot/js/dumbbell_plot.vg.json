@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 400,
+  "data": {
+    "url": "dumbbell_plot/data/estuary_fish.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "encoding": {
+    "y": {
+      "field": "Species",
+      "type": "ordinal",
+      "sort": {
+        "field": "Released Catch",
+        "order": "descending"
+      },
+      "axis": {
+        "title": "Fish or seafood species",
+        "labelLimit": 180
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#B8B8B8"
+      },
+      "encoding": {
+        "x": {
+          "field": "Released Catch",
+          "type": "quantitative",
+          "scale": {
+            "zero": true
+          },
+          "axis": {
+            "title": "Estimated number of organisms caught",
+            "format": ",.0f"
+          }
+        },
+        "x2": {
+          "field": "Kept Catch"
+        },
+        "tooltip": [
+          {"field": "Species", "type": "nominal"},
+          {"field": "Released Catch", "type": "quantitative", "format": ",.2f"},
+          {"field": "Kept Catch", "type": "quantitative", "format": ",.2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": ["Released Catch", "Kept Catch"],
+          "as": ["Catch Type", "Catch"]
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 130
+      },
+      "encoding": {
+        "x": {
+          "field": "Catch",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Catch Type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Released Catch", "Kept Catch"],
+            "range": ["#2878B5", "#E1812C"]
+          },
+          "legend": {
+            "title": "Catch outcome",
+            "orient": "right"
+          }
+        },
+        "tooltip": [
+          {"field": "Species", "type": "nominal"},
+          {"field": "Catch Type", "type": "nominal"},
+          {"field": "Catch", "type": "quantitative", "format": ",.2f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "grid": true,
+      "gridOpacity": 0.2,
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}

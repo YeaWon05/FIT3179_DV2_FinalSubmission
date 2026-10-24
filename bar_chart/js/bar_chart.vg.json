@@ -1,0 +1,55 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+
+  "data": {
+    "url": "bar_chart/data/reason_participation.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {"calculate": "trim(datum['Motivation'])", "as": "Reason"},
+    {"calculate": "toNumber(trim(datum[' Total (%)'] || datum['Total (%)']))", "as": "Percent"}
+  ],
+
+  "encoding": {
+    "y": {
+      "field": "Reason",
+      "type": "nominal",
+      "title": null,
+      "sort": "-x",
+      "axis": {"labelFontSize": 13, "ticks": false, "domain": false}
+    },
+    "x": {
+      "field": "Percent",
+      "type": "quantitative",
+      "title": "Share of respondents (%)",
+      "scale": {"domain": [0, 40]},
+      "axis": {"grid": true, "gridColor": "#eeeeee", "tickMinStep": 5}
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {"type": "bar", "color": "#1f77b4", "cornerRadiusEnd": 3, "height": {"band": 0.7}},
+      "encoding": {
+        "tooltip": [
+          {"field": "Reason", "type": "nominal", "title": "Motivation"},
+          {"field": "Percent", "type": "quantitative", "title": "Share (%)"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 5, "fontSize": 12, "fontWeight": "bold", "color": "#1f4e79"},
+      "encoding": {
+        "text": {"field": "Percent", "type": "quantitative", "format": ".0f"}
+      }
+    }
+  ],
+
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"grid": false}
+  }
+}

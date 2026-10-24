@@ -1,0 +1,188 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 400,
+  "padding": {
+    "left": 30,
+    "right": 30,
+    "top": 5,
+    "bottom": 5
+  },
+  "data": {
+    "url": "bump_chart/data/seasonal_fish.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.Harvest_kg)",
+      "as": "HarvestValue"
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "Rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "HarvestValue",
+          "order": "descending"
+        }
+      ],
+      "groupby": ["Season"]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Season",
+      "type": "ordinal",
+      "sort": ["Spring", "Summer", "Autumn", "Winter"],
+      "scale": {
+        "padding": 1.5
+      },
+      "axis": {
+        "orient": "top",
+        "title": null,
+        "labelAngle": 0,
+        "labelFontSize": 12,
+        "labelPadding": 10,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "y": {
+      "field": "Rank",
+      "type": "quantitative",
+      "title": "Rank (1 = highest harvest)",
+      "scale": {
+        "domain": [6.5, 0.5],
+        "nice": false,
+        "zero": false
+      },
+      "axis": {
+        "values": [1, 2, 3, 4, 5, 6],
+        "format": "d",
+        "grid": false,
+        "labelFontSize": 12,
+        "labelPadding": 35,
+        "titlePadding": 20
+      }
+    },
+    "color": {
+      "field": "Species",
+      "type": "nominal",
+      "scale": {
+        "scheme": "tableau10"
+      },
+      "legend": null
+    },
+    "detail": {
+      "field": "Species"
+    },
+    "tooltip": [
+      {
+        "field": "Season",
+        "type": "ordinal",
+        "title": "Season"
+      },
+      {
+        "field": "Species",
+        "type": "nominal",
+        "title": "Species"
+      },
+      {
+        "field": "HarvestValue",
+        "type": "quantitative",
+        "title": "Harvest (kg)",
+        "format": ",.0f"
+      },
+      {
+        "field": "Rank",
+        "type": "quantitative",
+        "title": "Rank",
+        "format": "d"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 90,
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Season === 'Spring'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -18,
+        "fontSize": 10
+      },
+      "encoding": {
+        "text": {
+          "field": "Species",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "Species",
+          "type": "nominal",
+          "scale": {
+            "scheme": "tableau10"
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Season === 'Winter'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 18,
+        "fontSize": 10
+      },
+      "encoding": {
+        "text": {
+          "field": "Species",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "Species",
+          "type": "nominal",
+          "scale": {
+            "scheme": "tableau10"
+          },
+          "legend": null
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#333333",
+      "titleColor": "#333333"
+    }
+  }
+}

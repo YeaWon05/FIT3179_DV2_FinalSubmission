@@ -1,0 +1,83 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 450,
+
+  "data": {
+    "url": "heat_map/data/harvest_fish.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "mark": {
+    "type": "rect",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "State",
+      "type": "nominal",
+      "title": "State or Territory",
+      "sort": ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT"],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "Species",
+      "type": "nominal",
+      "title": "Fish Species",
+      "sort": [
+        "Whiting",
+        "Flathead",
+        "Australian herring",
+        "Bream",
+        "King George whiting",
+        "Mullet",
+        "Garfish",
+        "Tailor",
+        "Australian salmon",
+        "Pink snapper"
+      ]
+    },
+    "color": {
+      "field": "Harvest",
+      "type": "quantitative",
+      "title": "Estimated Harvest",
+      "scale": {
+        "type": "log",
+        "scheme": "blues"
+      },
+      "legend": {
+        "format": ","
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Species",
+        "type": "nominal",
+        "title": "Fish Species"
+      },
+      {
+        "field": "State",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "Harvest",
+        "type": "quantitative",
+        "title": "Estimated Harvest",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "grid": false
+    }
+  }
+}
