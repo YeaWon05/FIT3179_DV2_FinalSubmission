@@ -23,7 +23,7 @@
       "type": "nominal",
       "title": "Fishing method",
       "sort": {"field": "Percent", "order": "descending"},
-      "scale": {"range": ["#1f4e79", "#1f77b4", "#6baed6", "#c6dbef"]},
+      "scale": {"range": ["#E69F00", "#59A14F", "#4E79A7", "#8C564B"]},
       "legend": {"orient": "right", "labelFontSize": 13, "titleFontSize": 13}
     }
   },
